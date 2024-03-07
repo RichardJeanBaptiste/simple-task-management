@@ -23,6 +23,13 @@ const useStyles = (theme: any) => ({
     width: '100%',
     height: '100%',
     position: 'relative'
+  },
+  task_box: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '100%',
+    height: '8vh',
+    backgroundColor: '#F5D565'
   }
 
 })
@@ -57,10 +64,7 @@ export default function Home() {
   const TaskBox = ({color, icon, new_task="false"}: any) => {
 
     return (
-      <Box>
-        <p>{color}</p>
-        <p>{icon}</p>
-        <p>{new_task}</p>
+      <Box sx={styles.task_box}>
         <p><span></span> Task in progress</p>
         <p>progress icon</p>
       </Box>
