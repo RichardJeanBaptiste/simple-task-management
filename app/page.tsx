@@ -8,7 +8,13 @@ import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import logo from "@/public/Logo.svg";;
+import ClockIcon from '@/public/3d-alarm.png';
+import WeightLiftingIcon from '@/public/weightlifting.png';
+import BooksIcon from '@/public/stack-of-books.png';
+import CoffeeIcon from '@/public/coffee-cup.png';
+import ChatIcon from '@/public/chat.png';
+import LaptopIcon from '@/public/browsing.png';
+import logo from "@/public/Logo.svg";
 import Image from 'next/image';
 import "./page.module.css";
 
@@ -97,8 +103,14 @@ export default function Home() {
 
     return (
       <Box sx={TaskStyle}>
+        <Box sx={{position: 'relative', width: '30px', height: '30px'}}>
+          <Image
+            src={ClockIcon}
+            fill
+            alt="Clock Icon"
+          />
+        </Box>
         <p>Task in progress</p>
-        <p>progress icon</p>
       </Box>
     )
   }
