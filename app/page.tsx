@@ -6,8 +6,6 @@ import { useTheme }  from '@mui/material/styles';
 import { useRouter } from 'next/navigation';
 import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
-import CheckIcon from '@mui/icons-material/Check';
-import ClearIcon from '@mui/icons-material/Clear';
 import ClockIcon from '@/public/3d-alarm.png';
 import WeightLiftingIcon from '@/public/weightlifting.png';
 import BooksIcon from '@/public/stack-of-books.png';
@@ -17,13 +15,17 @@ import LaptopIcon from '@/public/browsing.png';
 import logo from "@/public/Logo.svg";
 import AddIcon from "@/public/Add_round_duotone.svg";
 import DuoToneIcon from '@/public/Done_round_duotone.svg';
-import AddRoundIcon from '@/public/Add_round_duotone.svg';
 import TimeDuoToneIcon from '@/public/Time_atack_duotone.svg';
 import CloseIcon from '@/public/close_ring_duotone.svg';
-import Image, { StaticImageData } from 'next/image';
-import "./page.module.css";
+import Image from 'next/image';
 import ModalStatusIcon from './components/ModalStatus/ModalStatusIcon';
+import BoardTitle from './components/BoardTitle/BoardTitle';
+import ModalTaskIcon from './components/ModalTaskIcon/ModalTaskIcon';
+import TaskIcon from './components/TaskIcon';
 import { useStyles } from './styles';
+import "./page.module.css";
+
+
 
 
 export default function Home() {
@@ -36,45 +38,6 @@ export default function Home() {
   const [title, SetTitle] = useState("My Task Board");
   const [editTitle, SetEditTitle] = useState(false);
   
-  const TaskIcon = ({task_icon}: any) => {
-
-    let current_icon: string | StaticImageData = "";
-
-    switch(task_icon) {
-      case "clock":
-        current_icon = ClockIcon;
-        break;
-      case "books":
-        current_icon = BooksIcon;
-        break;
-      case "weights":
-        current_icon = WeightLiftingIcon;
-        break;
-      case "laptop":
-        current_icon = LaptopIcon;
-        break;
-      case "coffee":
-        current_icon = CoffeeIcon;
-        break;
-      case "chat":
-        current_icon = ChatIcon;
-        break;
-      default:
-        current_icon = "";
-    } 
-    
-    return (
-      <Box sx={{marginLeft: '3%', marginTop: '4%', width: '55px', height: '55px', backgroundColor:'white', borderRadius: '12px'}}>
-        <Box sx={styles.task_icon}>
-          <Image
-            src={current_icon}
-            fill
-            alt="icon"
-          />
-        </Box>
-      </Box>
-    )
-  }
 
   const TaskBox = ({name="", status, icon, desc="", new_task=false}: any) => {
 
@@ -146,53 +109,17 @@ export default function Home() {
                 {/************************ Task Icons ***************************/}
                 <p>Icon</p>
                 <Box sx={{display: 'flex', flexDirection: 'row'}}>
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={ClockIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={ClockIcon}/>
 
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={ChatIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={ChatIcon}/>
 
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={WeightLiftingIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={WeightLiftingIcon}/>
 
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={BooksIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={BooksIcon}/>
 
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={CoffeeIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={CoffeeIcon}/>
 
-                  <Box sx={[styles.task_icon, styles.task_icon2]}>
-                    <Image
-                      src={LaptopIcon}
-                      fill
-                      alt= "add new task"
-                    />
-                  </Box>
+                  <ModalTaskIcon icon={LaptopIcon}/>
                 </Box>
 
                 {/************************ Status Icons ***************************/}
@@ -205,7 +132,6 @@ export default function Home() {
 
                 </Box>
               </Box>
-              
             </Box>
         </Modal>
 
@@ -220,44 +146,6 @@ export default function Home() {
     }   
   }
 
-  const BoardTitle = () => {
-
-    const [boardTitle, SetBoardTitle] = useState("");
-    
-    const handleTitleChange = (e: any) => {
-      SetBoardTitle(e.target.value);
-    }
-
-    const setBoardTitle = () => {
-      SetTitle(boardTitle);
-      SetEditTitle(!editTitle);
-    }
-
-    if(!editTitle){
-      return (
-        <Box>
-          <h3 style={styles.outfit_title}>{title}</h3>
-          <h5 style={styles.outfit_desc}>Tasks to keep organised</h5>
-        </Box>
-      )
-    } else {
-      return (
-        <Box>
-            <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-              <TextField id="standard-basic" label="Board Name" variant="standard" placeholder={title} onChange={handleTitleChange}/>
-              <IconButton onClick={setBoardTitle}>
-                  <CheckIcon/>
-              </IconButton>
-              <IconButton>
-                  <ClearIcon/>
-              </IconButton>
-            </Box>
-            
-            <h5 style={styles.outfit_desc} onClick={() => console.log(title)}>Tasks to keep organised</h5>
-        </Box>
-      )
-    } 
-  }
 
   return (
     <Box sx={styles.root}>
@@ -271,16 +159,13 @@ export default function Home() {
               />
             </Box>
 
-            <BoardTitle/>
+            <BoardTitle title={title} SetTitle={SetTitle} editTitle={editTitle} SetEditTitle={SetEditTitle}/>
 
             <Box sx={styles.icon_box}>
               <IconButton onClick={() => SetEditTitle(!editTitle)}>
                   <EditIcon/>
               </IconButton>
-            </Box>
-            
-
-            
+            </Box> 
         </Box>
         
         <Box sx={{ paddingBottom: '2.5%'}}>
@@ -303,3 +188,4 @@ export default function Home() {
     </Box>    
   );
 }
+ 
