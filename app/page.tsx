@@ -44,10 +44,14 @@ export default function Home() {
     const [currentName, SetCurrentName] = useState(name);
     const [currentIcon, SetCurrentIcon] = useState(icon);
     const [currentDesc, SetCurrentDesc] = useState(desc);
+    const [selectedIdx, SetSelectedIdx] = useState(1);
     const [open, SetOpen] = useState(false);
 
     const handleOpen = () => SetOpen(true);
     const handleClose = () => SetOpen(false);
+    const handleSelectedIndex = (newIndex: number) => {
+      SetSelectedIdx(newIndex);
+    }
 
 
     let TaskStyle;
@@ -125,11 +129,9 @@ export default function Home() {
                 {/************************ Status Icons ***************************/}
                 <p>Status</p>
                 <Box sx={{ display: 'grid', gridTemplateColumns:'auto auto', gridGap: '20px'}}>
-                    
-                    <ModalStatusIcon icon_svg={TimeDuoToneIcon} bg_color="#E9A23B" text="In Progress" selected={true}/>
-                    <ModalStatusIcon icon_svg={DuoToneIcon} bg_color="#32D657" text="Completed" />
-                    <ModalStatusIcon icon_svg={CloseIcon} bg_color="#DD524C" text="Won't Do"/>
-
+                    <ModalStatusIcon icon_svg={TimeDuoToneIcon} bg_color="#E9A23B" text="In Progress" selected={1} selectedIdx={selectedIdx} handleSelected={() => handleSelectedIndex(1)}/>
+                    <ModalStatusIcon icon_svg={DuoToneIcon} bg_color="#32D657" text="Completed" selected={2} selectedIdx={selectedIdx} handleSelected={() => handleSelectedIndex(2)}/>
+                    <ModalStatusIcon icon_svg={CloseIcon} bg_color="#DD524C" text="Won't Do" selected={3} selectedIdx={selectedIdx} handleSelected={() => handleSelectedIndex(3)}/>
                 </Box>
               </Box>
             </Box>
