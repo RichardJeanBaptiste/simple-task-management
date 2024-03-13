@@ -10,10 +10,6 @@ export default function ModalStatusIcon({icon_svg, bg_color, text, selected, sel
     const theme = useTheme();
     const styles = useStyles({theme, bg_color});
 
-    useEffect(() => {
-        console.log(`${selected}, ${selectedIdx}`);
-    },[])
-
     const handleSelectedStyle = () => {
         if(selected === selectedIdx){
             return styles.status_root_selected
