@@ -57,18 +57,35 @@ export default function Home() {
       SetSelectedIdx(newIndex);
     }
 
-    const handleIconIndex = (newIndex: number) => {
-      SetSelectedIconIdx(newIndex);
+    const handleIconChange = (newIndex: number) => {
+      if(newIndex === 1){
+        SetCurrentIcon("clock");
+      } else if(newIndex === 2){
+        SetCurrentIcon("chat");
+      } else if(newIndex === 3){
+        SetCurrentIcon("weights");
+      } else if(newIndex === 4){
+        SetCurrentIcon("books");
+      } else if(newIndex === 5){
+        SetCurrentIcon("coffee");
+      } else {
+        SetCurrentIcon("laptop");
+      }
     }
 
+    const handleIconIndex = (newIndex: number) => {
+      SetSelectedIconIdx(newIndex);
+      handleIconChange(newIndex);
+    }
+    
 
     let TaskStyle;
 
-    if(status === 'in_progress'){
+    if(selectedIdx === 1){
       TaskStyle = [styles.task_box, styles.task_box_orange]
-    } else if(status === 'completed'){
+    } else if(selectedIdx === 2){
       TaskStyle = [styles.task_box, styles.task_box_green]
-    } else if(status === 'wont_do'){
+    } else if(selectedIdx === 3){
       TaskStyle = [styles.task_box, styles.task_box_pink]
     } else {
       TaskStyle = [styles.task_box, styles.task_box_gray]
