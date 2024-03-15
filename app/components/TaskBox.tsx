@@ -8,6 +8,7 @@ import Image from 'next/image';
 import ModalTaskIcon from './ModalTaskIcon/ModalTaskIcon';
 import ModalStatusIcon from './ModalStatus/ModalStatusIcon';
 import TaskIcon from './TaskIcon';
+import StatusIcon from './StatusIcon/StatusIcon';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import CheckIcon from '@mui/icons-material/Check';
 import ClockIcon from '@/public/3d-alarm.png';
@@ -29,6 +30,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
     const [currentName, SetCurrentName] = useState(name);
     const [currentIcon, SetCurrentIcon] = useState(icon);
     const [currentDesc, SetCurrentDesc] = useState(desc);
+    const [currentStatus, SetCurrentStatus] = useState(status);
     const [selectedIdx, SetSelectedIdx] = useState(1);
     const [selectedIconIdx, SetSelectedIconIdx] = useState(1);
     const [open, SetOpen] = useState(false);
@@ -38,6 +40,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
 
     const handleSelectedIndex = (newIndex: number) => {
       SetSelectedIdx(newIndex);
+      SetCurrentStatus(newIndex);
     }
 
     const handleIconChange = (newIndex: number) => {
@@ -59,6 +62,14 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
     const handleIconIndex = (newIndex: number) => {
       SetSelectedIconIdx(newIndex);
       handleIconChange(newIndex);
+    }
+
+    const handleNameChange = (e: any) => {
+        SetCurrentName(e.target.value);
+    }
+
+    const handleDescChange = (e: any) => {
+        SetCurrentDesc(e.target.value);
     }
     
 
@@ -121,7 +132,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
               
               <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <p style={styles.modal_text}>Task Name</p>
-                <TextField id="standard-basic"  variant="outlined" placeholder={currentName}/>
+                <TextField id="standard-basic"  variant="outlined" placeholder={currentName} value={currentName} onChange={handleNameChange}/>
 
                 <p style={styles.modal_text}>Description</p>
                 <TextField
@@ -129,6 +140,8 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
                   placeholder={currentDesc}
                   multiline
                   maxRows={7}
+                  value={currentDesc}
+                  onChange={handleDescChange}
                 />
 
                 {/************************ Task Icons ***************************/}
@@ -174,8 +187,12 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
 
         <Box sx={TaskStyle} onClick={handleOpen}>
           <TaskIcon task_icon={currentIcon}/>
-          <h3 style={styles.task_title}>{currentName}</h3>
-          <p>{currentDesc}</p>
+          <Box sx={{ width: '80%', marginLeft: '3%'}}>
+            <h3>{currentName}</h3>
+            {"\n"}
+            <p>{currentDesc}</p>
+          </Box>
+          <StatusIcon status_icon={currentStatus}/>
         </Box>
         </>
         
