@@ -31,7 +31,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
     const [currentIcon, SetCurrentIcon] = useState(icon);
     const [currentDesc, SetCurrentDesc] = useState(desc);
     const [currentStatus, SetCurrentStatus] = useState(status);
-    const [selectedIdx, SetSelectedIdx] = useState(1);
+    const [selectedIdx, SetSelectedIdx] = useState(status);
     const [selectedIconIdx, SetSelectedIconIdx] = useState(1);
     const [open, SetOpen] = useState(false);
 
@@ -99,10 +99,11 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
               </Box>
           </Box>
           
-          <h3 style={styles.task_title}>Add New Task</h3>
+          <h3 style={{ marginTop: '5.5%',marginLeft: '3%'}}>Add New Task</h3>
         </Box>
       )
     } else {
+      /******************************** Modify Existing Task ********************************/
       return (
         <>
           <Modal
@@ -192,7 +193,9 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
             {"\n"}
             <p>{currentDesc}</p>
           </Box>
-          <StatusIcon status_icon={currentStatus}/>
+          <Box sx={{marginLeft: '-4.5%', marginTop:'2.5%'}}>
+            <StatusIcon status_icon={currentStatus}/>
+          </Box>
         </Box>
         </>
         

@@ -23,7 +23,13 @@ export default function Home() {
   const [id, SetNewID] = useState(uuidv4());
   const [title, SetTitle] = useState("My Task Board");
   const [editTitle, SetEditTitle] = useState(false);
+  const [tasks, SetTasks] = useState<any>([]);
   
+  const AddTask = () => {
+    let temp = [...tasks];
+    temp.push("a");
+    SetTasks(temp);
+  }
 
   return (
     <Box sx={styles.root}>
@@ -46,20 +52,28 @@ export default function Home() {
             </Box> 
         </Box>
         
+        {tasks.map((x: any, index: number) => {
+          return (
+            <Box sx={{ paddingBottom: '2.5%'}} key={index}>
+              <TaskBox status={4} icon="books"/>
+            </Box>
+          )
+        })}
+
         <Box sx={{ paddingBottom: '2.5%'}}>
-          <TaskBox name="Task in progress" desc="" status="in_progress" icon="clock"/>
+          <TaskBox name="Task in progress" desc="" status={1} icon="clock"/>
         </Box>
         
         <Box sx={{ paddingBottom: '2.5%'}}>
-          <TaskBox name="Task Completed" desc="" status="completed" icon="weights"/>
+          <TaskBox name="Task Completed" desc="" status={2} icon="weights"/>
         </Box>
 
         <Box sx={{ paddingBottom: '2.5%'}}>
-          <TaskBox name="Task Won't Do" status="wont_do" icon="books"/>
+          <TaskBox name="Task Won't Do" status={3} icon="books"/>
         </Box>
 
-        <Box sx={{ paddingBottom: '2.5%'}}>
-          <TaskBox status="gray" icon="test" new_task={true}/>
+        <Box sx={{ paddingBottom: '2.5%'}} onClick={AddTask}>
+          <TaskBox status="gray" icon="test" new_task={true} />
         </Box>
        
       </Box>
