@@ -15,13 +15,13 @@ export async function POST(request: Request){
 
         let data = await request.json();
 
-        //console.log(data.board_id);
+        console.log(data);
 
         let newTaskBoard = new taskBoard({
-            BoardID: data.board_id,
-            BoardName: "My Task Board",
+            BoardID: data.BoardID,
+            BoardTitle: data.BoardTitle,
             BoardDesc: "Tasks to keep organised",
-            Tasks: [],
+            Tasks: data.Tasks,
         })
 
         await newTaskBoard.save();

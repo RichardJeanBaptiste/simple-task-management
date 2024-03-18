@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const TaskBoardSchema = new mongoose.Schema({
     BoardID: String,
-    BoardName: String,
+    BoardTitle: String,
     BoardDesc: String,
     Tasks: Array,
 })
