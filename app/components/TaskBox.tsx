@@ -23,7 +23,7 @@ import TimeDuoToneIcon from '@/public/Time_atack_duotone.svg';
 import CloseIcon from '@/public/close_ring_duotone.svg';
 import axios from 'axios';
 
-export default function TaskBox({name="", status, icon, desc="", new_task=false, task_id, board_id}: any){
+export default function TaskBox({name="", status, icon, desc="", new_task=false, task_id, board_id, RemoveTask}: any){
 
     const theme = useTheme();
     const styles = useStyles(theme);
@@ -84,6 +84,21 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
       })
       .then(function (response) {
       console.log(response);
+      })
+      .catch(function (error) {
+      console.log(error);
+      }); 
+    }
+
+    const deleteTask = () => {
+      axios.post('/api/delete_task', {
+        boardID: board_id,
+        taskID: task_id,
+      })
+      .then(function (response) {
+        console.log(response);
+        RemoveTask(task_id);
+        SetOpen(false);
       })
       .catch(function (error) {
       console.log(error);
@@ -150,7 +165,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
               </Box>
               
               <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <p style={styles.modal_text}>Task Name</p>
+                <p style={styles.modal_text}>Task Name - {task_id}</p>
                 <TextField id="standard-basic"  variant="outlined" placeholder={currentName} value={currentName} onChange={handleNameChange}/>
 
                 <p style={styles.modal_text}>Description</p>
@@ -190,7 +205,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
                 {/*********************** Bottom Buttons **************************/}
                 <Box sx={{ width: '47%', marginTop: '15%', marginLeft: '57%',position: 'relative'}}>
                   <Box sx={{ display: 'flex', flexDirection: 'row'}}>
-                      <Button variant="contained" color='error' endIcon={<DeleteForeverIcon/>} sx={{  backgroundColor:'#97A3B6', borderRadius: '27px', width: '9vw' }}>
+                      <Button variant="contained" color='error' endIcon={<DeleteForeverIcon/>} sx={{  backgroundColor:'#97A3B6', borderRadius: '27px', width: '9vw' }} onClick={deleteTask}>
                           Delete
                       </Button>
 

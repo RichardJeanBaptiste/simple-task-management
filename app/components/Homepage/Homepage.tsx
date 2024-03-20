@@ -55,6 +55,14 @@ export default function Homepage() {
     }   
   }
 
+  const RemoveTask = (itemId: string) => {
+    let temp = [...tasks];
+
+    temp = temp.filter(item => item.task_id !== itemId);
+
+    SetTasks(temp);
+  }
+
   const copyToClipboard = () => {
     navigator.clipboard.writeText(`localhost:3000/view/${id}`);
   }
@@ -116,7 +124,7 @@ export default function Homepage() {
         {tasks.map((x: any, index: number) => {
           return (
             <Box sx={{ paddingBottom: '2.5%'}} key={index} onClick={handleFirstChange}>
-              <TaskBox name={x.task_title} desc={x.desc} status={x.status} icon={x.icon} task_id={x.task_id} board_id={id}/>
+              <TaskBox name={x.task_title} desc={x.desc} status={x.status} icon={x.icon} task_id={x.task_id} board_id={id} RemoveTask={RemoveTask}/>
             </Box>
           )
         })}
