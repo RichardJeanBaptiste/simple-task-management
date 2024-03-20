@@ -21,8 +21,9 @@ import AddIcon from "@/public/Add_round_duotone.svg";
 import DuoToneIcon from '@/public/Done_round_duotone.svg';
 import TimeDuoToneIcon from '@/public/Time_atack_duotone.svg';
 import CloseIcon from '@/public/close_ring_duotone.svg';
+import axios from 'axios';
 
-export default function TaskBox({name="", status, icon, desc="", new_task=false}: any){
+export default function TaskBox({name="", status, icon, desc="", new_task=false, task_id, board_id}: any){
 
     const theme = useTheme();
     const styles = useStyles(theme);
@@ -70,6 +71,23 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
 
     const handleDescChange = (e: any) => {
         SetCurrentDesc(e.target.value);
+    }
+
+    const saveTaskChange = () => {
+      axios.post('/api/edit_board', {
+        boardID: board_id,
+        taskID: task_id,
+        title: currentName,
+        icon: currentIcon,
+        desc: currentDesc,
+        status: currentStatus,
+      })
+      .then(function (response) {
+      console.log(response);
+      })
+      .catch(function (error) {
+      console.log(error);
+      }); 
     }
     
 
@@ -176,7 +194,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false}
                           Delete
                       </Button>
 
-                      <Button variant="contained" endIcon={<CheckIcon/>} sx={{ marginLeft: '2%', borderRadius: '27px', width: '9vw'}} >
+                      <Button variant="contained" endIcon={<CheckIcon/>} sx={{ marginLeft: '2%', borderRadius: '27px', width: '9vw'}} onClick={saveTaskChange} >
                           Save
                       </Button>
                   </Box>

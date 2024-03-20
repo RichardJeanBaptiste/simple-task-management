@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import { taskBoard } from "../Schemas";
 
 
-
 export async function POST(request: Request){
 
     try {
@@ -14,8 +13,6 @@ export async function POST(request: Request){
         }
 
         let data = await request.json();
-
-        //console.log(data);
 
         if(data.new === true){
             let newTaskBoard = new taskBoard({
