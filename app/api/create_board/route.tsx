@@ -15,16 +15,31 @@ export async function POST(request: Request){
 
         let data = await request.json();
 
-        console.log(data);
+        //console.log(data);
 
-        let newTaskBoard = new taskBoard({
-            BoardID: data.BoardID,
-            BoardTitle: data.BoardTitle,
-            BoardDesc: "Tasks to keep organised",
-            Tasks: data.Tasks,
-        })
+        if(data.new === true){
+            let newTaskBoard = new taskBoard({
+                BoardID: data.BoardID,
+                BoardTitle: data.BoardTitle,
+                BoardDesc: "Tasks to keep organised",
+                Tasks: data.Tasks,
+            })
+    
+            await newTaskBoard.save();
+        } else {
 
-        await newTaskBoard.save();
+            taskBoard.findOneAndUpdate(
+                {BoardID: data.BoardID},
+                {$push: {Tasks: data.Tasks[ data.Tasks.length - 1]}},
+            ).then((doc) => {
+                console.log(doc);
+            }).catch((err) => {
+                console.log(err);
+            })
+            
+            console.log("Not New")
+        }   
+        
 
         return NextResponse.json({"msg": "New Board Saved"}, {status: 200});
     } catch (error) {

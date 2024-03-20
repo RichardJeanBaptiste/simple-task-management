@@ -74,20 +74,19 @@ export const TaskProvider = ({children}: TaskProviderProps) => {
     const [tasks, SetTasks] = useState<Array<Task>>(defaultTasks);
 
     const saveBoard = (currentTasks: Array<Task>, isNew: boolean) => {
-        if(isNew){
-            axios.post('/api/create_board', {
-                BoardID: id,
-                BoardTitle: title,
-                Tasks: currentTasks,
-            })
-            .then(function (response) {
-            console.log(response);
-            })
-            .catch(function (error) {
-            console.log(error);
-            });
-        }
         
+        axios.post('/api/create_board', {
+            BoardID: id,
+            BoardTitle: title,
+            Tasks: currentTasks,
+            new: isNew,
+        })
+        .then(function (response) {
+        console.log(response);
+        })
+        .catch(function (error) {
+        console.log(error);
+        });      
     }
     
 

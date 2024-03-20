@@ -31,7 +31,7 @@ export default function Homepage() {
       if(firstChange === false){
         SetFirstChange(true);
         SetShow(true);
-        
+        saveBoard(tasks, true);
       }
   }
   
@@ -45,8 +45,14 @@ export default function Homepage() {
       status: 0
     });
     SetTasks(temp);
-    saveBoard(temp, true);
     handleFirstChange();
+    
+    if(firstChange === true){
+      console.log(tasks);
+      saveBoard(tasks, false);
+    } else {
+      saveBoard(temp, true);
+    }   
   }
 
   const copyToClipboard = () => {
@@ -109,7 +115,7 @@ export default function Homepage() {
         
         {tasks.map((x: any, index: number) => {
           return (
-            <Box sx={{ paddingBottom: '2.5%'}} key={index}>
+            <Box sx={{ paddingBottom: '2.5%'}} key={index} onClick={handleFirstChange}>
               <TaskBox name={x.task_title} desc={x.desc} status={x.status} icon={x.icon}/>
             </Box>
           )
