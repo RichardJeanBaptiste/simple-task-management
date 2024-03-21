@@ -90,7 +90,6 @@ export const TaskProvider = ({children}: TaskProviderProps) => {
     }
     
 
-
     return (
         <TaskContext.Provider value={{ id, title, desc, tasks, SetId, SetTitle, SetDesc, SetTasks, saveBoard}}>
             {children}

@@ -46,7 +46,7 @@ export default function Homepage() {
     });
     SetTasks(temp);
     handleFirstChange();
-    
+
     if(firstChange === true){
       console.log(tasks);
       saveBoard(tasks, false);
@@ -84,7 +84,7 @@ export default function Homepage() {
               </Box>
             }
           >
-            <p>Access this board: {`localhost:3000/${id}`}</p>
+            <p>Access this board: {`localhost:3000/view/${id}`}</p>
           </Alert>
       )
     } else {

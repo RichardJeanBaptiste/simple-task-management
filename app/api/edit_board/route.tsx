@@ -14,6 +14,8 @@ export async function POST(request: Request){
 
         let data = await request.json(); 
 
+        console.log(data);
+
         taskBoard.findOneAndUpdate(
             { 
               BoardID: data.boardID, 
