@@ -1,6 +1,6 @@
 "use client"
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Box, Modal, TextField, Button} from '@mui/material';
 import { useTheme }  from '@mui/material/styles';
 import { useStyles } from '../styles';
@@ -28,13 +28,22 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
     const theme = useTheme();
     const styles = useStyles(theme);
 
-    const [currentName, SetCurrentName] = useState(name);
-    const [currentIcon, SetCurrentIcon] = useState(icon);
-    const [currentDesc, SetCurrentDesc] = useState(desc);
+    const [currentName, SetCurrentName] = useState("");
+    const [currentIcon, SetCurrentIcon] = useState("");
+    const [currentDesc, SetCurrentDesc] = useState();
     const [currentStatus, SetCurrentStatus] = useState(status);
     const [selectedIdx, SetSelectedIdx] = useState(status);
     const [selectedIconIdx, SetSelectedIconIdx] = useState(1);
     const [open, SetOpen] = useState(false);
+
+    useEffect(() => {
+      SetCurrentName(name);
+      SetCurrentDesc(desc);
+      SetCurrentIcon(icon);
+      SetCurrentStatus(status);
+      SetSelectedIdx(status);
+      handleIntialIconIdx(icon);
+    },[name, icon, desc, status]);
 
     const handleOpen = () => SetOpen(true);
     const handleClose = () => SetOpen(false);
@@ -42,6 +51,22 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
     const handleSelectedIndex = (newIndex: number) => {
       SetSelectedIdx(newIndex);
       SetCurrentStatus(newIndex);
+    }
+
+    const handleIntialIconIdx = (x: string) => {
+      if(x === "clock"){
+        SetSelectedIconIdx(1);
+      } else if(x === "chat"){
+        SetSelectedIconIdx(2);
+      } else if(x === "weights"){
+        SetSelectedIconIdx(3);
+      } else if(x === "books"){
+        SetSelectedIconIdx(4);
+      } else if(x === "coffee"){
+        SetSelectedIconIdx(5);
+      } else {
+        SetSelectedIconIdx(6);
+      }
     }
 
     const handleIconChange = (newIndex: number) => {
@@ -91,6 +116,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
     }
 
     const deleteTask = () => {
+
       axios.post('/api/delete_task', {
         boardID: board_id,
         taskID: task_id,
@@ -165,7 +191,7 @@ export default function TaskBox({name="", status, icon, desc="", new_task=false,
               </Box>
               
               <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%'}}>
-                <p style={styles.modal_text}>Task Name - {task_id}</p>
+                <p style={styles.modal_text}>Task Name</p>
                 <TextField id="standard-basic"  variant="outlined" placeholder={currentName} value={currentName} onChange={handleNameChange}/>
 
                 <p style={styles.modal_text}>Description</p>

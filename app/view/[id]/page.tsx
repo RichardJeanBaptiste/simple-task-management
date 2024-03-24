@@ -42,6 +42,7 @@ function ViewTask({board_id}: any) {
           status: 0
         });
         SetTasks(temp); 
+        saveBoard(temp, false);
       }
 
     const RemoveTask = (itemId: string) => {
@@ -55,8 +56,6 @@ function ViewTask({board_id}: any) {
 
     return (
         <>
-            <p onClick={() => console.log(tasks)}>{board_id}</p>
-
             {tasks.map((x: any, index: number) => {
                 return (
                     <Box sx={{ paddingBottom: '2.5%'}} key={index}>
